@@ -8,7 +8,7 @@ def index(request):
     return render(request, 'polls/index.html', {'latest_question_list': latest_question_list})
 
 
-def detail(request, question_id):
+def details(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
     return render(request, 'polls/detail.html', {'question': question})
 
