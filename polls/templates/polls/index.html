@@ -12,3 +12,7 @@
 {% else %}
 <p>No polls are available.</p>
 {% endif %}
+
+<form action="{% url 'polls:create' %}">
+    <button type="submit">Create</button>
+</form>

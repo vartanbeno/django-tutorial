@@ -59,3 +59,9 @@ def vote(request, question_id):
         # The comma after question.id is important, as it represents a
         # single-element tuple, instead of just question.id.
         return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
+
+
+class CreateView(generic.CreateView):
+    model = Question
+    fields = ['question_text']
+    template_name = 'polls/create.html'
