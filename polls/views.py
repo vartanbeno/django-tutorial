@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect
 from .models import Question, Choice
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.views import generic
 from django.utils import timezone
 
@@ -71,3 +71,8 @@ class UpdateView(generic.UpdateView):
     model = Question
     fields = ['question_text']
     template_name = 'polls/create.html'
+
+
+class DeleteView(generic.DeleteView):
+    model = Question
+    success_url = reverse_lazy('polls:index')
