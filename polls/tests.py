@@ -1,6 +1,6 @@
 from django.test import TestCase
 from django.utils import timezone
-from .models import Question
+from .models import Question, Choice
 import datetime
 from django.urls import reverse
 
@@ -125,3 +125,29 @@ class QuestionDetailViewTest(TestCase):
         url = reverse('polls:details', args=(past_question.id,))
         response = self.client.get(url)
         self.assertContains(response, past_question.question_text)
+
+
+class QuestionResultsViewTest(TestCase):
+
+    def test_future_question(self):
+        """
+        The details view of a question with a future pub_date returns a
+        404 not found.
+        """
+        future_question = create_question(question_text="This is a future question.", days=30)
+        url = reverse('polls:results', args=(future_question.id,))
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 404)
+
+    def test_past_question(self):
+        """
+        The results view of a question with a past pub_date displays
+        the question's text (question_text) and its voting options (if any).
+        """
+        past_question = create_question(question_text="This is a past question.", days=-30)
+        past_question.choice_set.create(choice_text="This is a voting option.")
+        url = reverse('polls:results', args=(past_question.id,))
+        response = self.client.get(url)
+        self.assertContains(response, past_question.question_text)
+        self.assertContains(response, "This is a voting option.")
+
