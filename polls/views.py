@@ -65,3 +65,9 @@ class CreateView(generic.CreateView):
     model = Question
     fields = ['question_text']
     template_name = 'polls/create.html'
+
+
+class UpdateView(generic.UpdateView):
+    model = Question
+    fields = ['question_text']
+    template_name = 'polls/create.html'

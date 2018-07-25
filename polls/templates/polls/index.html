@@ -6,6 +6,11 @@
     {% for question in latest_question_list %}
     <li>
         <a href="{% url 'polls:details' question.id %}">{{ question.question_text }}</a>
+        <form action="{% url 'polls:update' question.id %}" style="display: inline;">
+            {% csrf_token %}
+            <input type="hidden" name="question_id" value="{{ question.id }}">
+            <button type="submit">Edit</button>
+        </form>
     </li>
     {% endfor %}
 </ul>
